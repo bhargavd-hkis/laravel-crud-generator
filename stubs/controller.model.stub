@@ -1,0 +1,111 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
+use Illuminate\Http\Response;
+use Exception;
+
+class {{ class }} extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \{{ namespacedStsoreRequest }}  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store({{ storeRequest }} $request)
+    {
+      try{
+        $data = {{ model }}::create($request->all());
+        return response()->json(['status' => true, 'data' => json_decode($data), 'Message' => "Record saved successfully"], 200);
+      } catch (Exception $e) {
+        return response()->json(['status' => false, 'data' => json_decode($e), 'Message' => "Something went wrong"], 200);
+      } 
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function show({{ model }} ${{ modelVariable }})
+    {
+      try{
+        return response()->json(['status' => true, 'data' => json_decode(${{ modelVariable }}), 'Message' => "Record found successfully"], 200);
+      } catch (Exception $e) {
+        return response()->json(['status' => false, 'data' => json_decode($e), 'Message' => "Something went wrong"], 200);
+      } 
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function edit({{ model }} ${{ modelVariable }})
+    {
+      try{
+        return response()->json(['status' => true, 'data' => json_decode(${{ modelVariable }}), 'Message' => "Record found successfully"], 200);
+      } catch (Exception $e) {
+        return response()->json(['status' => false, 'data' => json_decode($e), 'Message' => "Something went wrong"], 200);
+      } 
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \{{ namespacedUpdateRequest }}  $request
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    {
+      try{
+        $data = {{ model }}::where('id',${{ modelVariable }})->update($request->all());
+        return response()->json(['status' => true, 'data' => json_decode($data), 'Message' => "Record updated successfully"], 200);
+      } catch (Exception $e) {
+        return response()->json(['status' => false, 'data' => json_decode($e), 'Message' => "Something went wrong"], 200);
+      }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \{{ namespacedModel }}  ${{ modelVariable }}
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+      try{
+        ${{ modelVariable }}->delete();
+        return response()->json(['status' => true, 'data' => '', 'Message' => "Record deleted successfully"], 200);
+      } catch (Exception $e) {
+        return response()->json(['status' => false, 'data' => json_decode($e), 'Message' => "Something went wrong"], 200);
+      }
+    }
+}
